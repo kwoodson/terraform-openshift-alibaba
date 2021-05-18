@@ -18,6 +18,7 @@ resource "alicloud_instance" "instance" {
   // if this value is > 0 then it creates a public IP address
   internet_max_bandwidth_out = var.max_bandwidth_out
   user_data                  = data.template_file.user_data.rendered
+  host_name                  = "${var.instance_name}${var.instance_name == "bootstrap" || var.instance_name == "bastion" ? "" : count.index}"
 }
 
 data "alicloud_instances" "created" {
