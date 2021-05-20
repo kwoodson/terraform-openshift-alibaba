@@ -12,3 +12,7 @@ variable "storage_type" {
   type    = string
   default = "Capacity"
 }
+
+variable "vswitch_id" {
+  type = string
+}

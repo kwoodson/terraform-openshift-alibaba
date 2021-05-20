@@ -38,8 +38,11 @@ module "load_balancer" {
   vpc_id            = module.vpc.vpc_id
   api_endpoint      = var.api_endpoint
   account_id        = var.account_id
-  backend_servers   = concat(module.master.instance_ids, module.worker.instance_ids, module.bootstrap.instance_ids)
-  cluster_name      = var.cluster_name
+  # backend_servers   = concat(module.master.instance_ids, module.worker.instance_ids, module.bootstrap.instance_ids)
+  masters      = module.master.instance_ids
+  workers      = module.worker.instance_ids
+  bootstrap    = module.bootstrap.instance_ids
+  cluster_name = var.cluster_name
 }
 
 module "nas" {
@@ -47,6 +50,7 @@ module "nas" {
   proto_type   = "NFS"
   encrypt_type = "0"
   storage_type = "Capacity"
+  vswitch_id   = module.vpc.vswitch_id
 }
 
 module "dns" {

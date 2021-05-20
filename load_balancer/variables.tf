@@ -44,7 +44,19 @@ variable "load_balancer_address_type" {
   default = "intranet"
 }
 
-variable "backend_servers" {
+# variable "backend_servers" {
+#   type = list(any)
+# }
+
+variable "masters" {
+  type = list(any)
+}
+
+variable "workers" {
+  type = list(any)
+}
+
+variable "bootstrap" {
   type = list(any)
 }
 
