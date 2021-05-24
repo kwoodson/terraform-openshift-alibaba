@@ -6,8 +6,11 @@ provider "alicloud" {
 
 module "vpc" {
   source       = "./vpc"
-  vpc_name     = "kwoodson-vpc"
-  vswitch_name = "kwoodson-vswitch"
+  vpc_name     = var.vpc_name
+  vpc_cidr     = var.vpc_cidr
+  vsw_name     = var.vsw_name
+  vsw_cidrs    = var.vsw_cidrs
+  zone_id      = var.zone_id
 }
 
 module "oss" {

@@ -1,11 +1,12 @@
 resource "alicloud_vpc" "vpc" {
   vpc_name   = var.vpc_name
-  cidr_block = "192.168.0.0/16"
+  cidr_block = var.vpc_cidr
 }
 
 resource "alicloud_vswitch" "vsw" {
-  vswitch_name = var.vswitch_name
+  count        = length(var.vsw_cidrs)
+  vswitch_name = length(var.vsw_cidrs) > 1 || var.use_num_suffix ? format("%s%03d", var.vsw_name, count.index + 1) : var.vsw_name
   vpc_id       = alicloud_vpc.vpc.id
-  cidr_block   = "192.168.1.0/24"
-  zone_id      = "us-east-a"
+  cidr_block   = var.vsw_cidrs[count.index]
+  zone_id      = element(var.zone_id, count.index)
 }

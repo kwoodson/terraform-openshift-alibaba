@@ -3,5 +3,5 @@ output "vpc_id" {
 }
 
 output "vswitch_id" {
-  value = alicloud_vswitch.vsw.id
+  value = alicloud_vswitch.vsw.*.id
 }

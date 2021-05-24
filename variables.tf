@@ -13,6 +13,35 @@ variable "account_id" {
   //sensitive = true
 }
 
+variable "vpc_name" {
+  type      = string
+}
+
+variable "vpc_cidr" {
+  type      = string
+}
+
+variable "vsw_name" {
+  type      = string
+}
+
+variable "vsw_cidrs" {
+  type      = list(any)
+}
+
+variable "zone_id" {
+  type      = list(any)
+}
+
+variable "use_num_suffix" {
+  type        = bool
+  default     = false
+}
+
+variable "region" {
+  type = string
+}
+
 variable "public_domain" {
   type = string
 }
@@ -26,10 +55,6 @@ variable "bootstrap_instance_type" {
 }
 
 variable "worker_instance_type" {
-  type = string
-}
-
-variable "region" {
   type = string
 }
 
