@@ -1,9 +1,9 @@
 #!/bin/bash
 export PATH=$PATH:$(pwd)/bin/
 
-if [ $(find ~/alibaba/build/cluster/master.ign -mmin +240)  ];
+if [ $(find build/cluster/master.ign -mmin +240)  ];
 then
- pushd ~/alibaba/build/
+ pushd build/
    ./cluster.sh
  popd
 fi
@@ -19,8 +19,8 @@ terraform apply -auto-approve -var-file ./secrets/terraform.tfvars
 # remove statefile
 #terraform destroy -auto-approve -var-file ./secrets/terraform.tfvars 
 
-scp ../oc root@$(aliyun ecs DescribeInstances --RegionId us-east-1 --InstanceName bastion | jq  -r '.Instances.Instance[0].PublicIpAddress.IpAddress[0]'):
-scp ../build/cluster/auth/kubeconfig root@$(aliyun ecs DescribeInstances --RegionId us-east-1 --InstanceName bastion | jq  -r '.Instances.Instance[0].PublicIpAddress.IpAddress[0]'):
+scp -o StrictHostKeyChecking=no ../oc root@$(aliyun ecs DescribeInstances --RegionId us-east-1 --InstanceName bastion | jq  -r '.Instances.Instance[0].PublicIpAddress.IpAddress[0]'):/usr/local/bin/
+scp -o StrictHostKeyChecking=no build/cluster/auth/kubeconfig root@$(aliyun ecs DescribeInstances --RegionId us-east-1 --InstanceName bastion | jq  -r '.Instances.Instance[0].PublicIpAddress.IpAddress[0]'):
 
 ssh root@$(aliyun ecs DescribeInstances --RegionId us-east-1 --InstanceName bastion | jq  -r '.Instances.Instance[0].PublicIpAddress.IpAddress[0]')       
 #oc get csr -o go-template='{{range .items}}{{if not .status}}{{.metadata.name}}{{"\n"}
